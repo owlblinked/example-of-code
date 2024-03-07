@@ -1,0 +1,39 @@
+.containerCard {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 1rem;
+}
+
+@media (min-width: 901px) {
+  .containerCard {
+    grid-template-columns: calc(50% - 0.5rem) calc(50% - 0.5rem);
+  }
+}
+
+.candidateHeader {
+  display: flex;
+  align-items: center;
+}
+
+.wrapperInfo {
+  padding-left: 0.5rem;
+}
+
+.options {
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.badge {
+  background-color: var(--color-yellow-green);
+  border-radius: 1rem;
+  padding: 0.1rem 0.5rem;
+  display: inline-block;
+  margin: 0.25rem 0;
+  font-size: 0.8rem;
+}
+
+.verified {
+  font-size: 0.8rem;
+}

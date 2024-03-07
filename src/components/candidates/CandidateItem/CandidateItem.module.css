@@ -1,0 +1,49 @@
+.item {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.item:hover > div {
+  box-shadow: 0 0 0.75rem #bebebe;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  border-radius: 0.25rem;
+}
+
+.header {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 1rem;
+  padding-right: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.badgeText {
+  color: var(--color-cornflower-blue);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0.8rem 0 1rem;
+  display: block;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 901px) {
+  .header {
+    flex-direction: row;
+  }
+  .name {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
+}
