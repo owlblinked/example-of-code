@@ -1,8 +1,9 @@
-import { useState } from "react";
+import debounce from "lodash.debounce";
+import { useCallback, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { Card } from "../../components/UI/Card/Card";
 import { SearchBar } from "../../components/UI/Searchbar/Searchbar";
 import { CandidatesList } from "../../components/candidates/CandidatesList/CandidatesList";
+import { InfoSection } from "../../components/UI/InfoSection/InfoSection";
 import { ICandidateItem } from "../../types/candidates";
 
 import styles from "./CandidatesCatalog.module.css";
@@ -17,24 +18,39 @@ export const CandidatesCatalog = () => {
   const [filteredCandidates, setFilteredCandidates] =
     useState<ICandidateItem[]>(candidatesData);
 
-  const searchHandler = (searchQuery: string) => {
-    const filtered = candidatesData.filter(
-      (user) =>
-        user.firstName.toLowerCase().startsWith(searchQuery) ||
-        user.lastName.toLowerCase().startsWith(searchQuery) ||
-        `${user.firstName} ${user.lastName}`
-          .toLowerCase()
-          .startsWith(searchQuery)
-    );
-    setFilteredCandidates(filtered);
-  };
+  const searchHandler = useCallback(
+    debounce((searchQuery: string) => {
+      const lowerCaseSearchQuery = searchQuery.toLowerCase();
+
+      const filterCandidate = ([...arg]: string[]) => {
+        for (let i = 0; i < arg.length; i++) {
+          if (arg[i].toLowerCase().startsWith(lowerCaseSearchQuery)) {
+            return true;
+          }
+        }
+
+        return false;
+      };
+
+      const filtered = candidatesData.filter(
+        ({ firstName, lastName, location }) =>
+          filterCandidate([
+            firstName,
+            lastName,
+            `${firstName} ${lastName}`,
+            location,
+          ])
+      );
+
+      setFilteredCandidates(filtered);
+    }, 500),
+    [candidatesData]
+  );
 
   return (
     <section className="container">
-      <Card>
-        <h1 className="title">{TITLE}</h1>
-        <p className="subtitle">{SUBTITLE}</p>
-      </Card>
+      <InfoSection title={TITLE} subtitle={SUBTITLE} />
+
       <div className={styles.options}>
         <SearchBar
           placeholder={SEARCH_PLACEHOLDER}
@@ -47,12 +63,16 @@ export const CandidatesCatalog = () => {
 };
 
 export async function loader() {
-  const response = await fetch("http://localhost:3000/candidates");
+  try {
+    const response = await fetch("http://localhost:3000/candidates");
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch candidates data");
-  } else {
-    const data = await response.json();
-    return data;
+    if (!response.ok) {
+      throw new Error("Failed to fetch candidates data");
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 }

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { ICandidateItem } from "../../../types/candidates";
 import { Card } from "../../UI/Card/Card";
@@ -11,15 +11,9 @@ interface ICandidateItemProps {
 
 const FLAG_SIZE = 48;
 
-export const CandidateItem = ({ item }: ICandidateItemProps) => {
-  const fullName = useMemo(
-    () => `${item.firstName} ${item.lastName}`,
-    [item.firstName, item.lastName]
-  );
-  const countryFlag = useMemo(
-    () => generateCountryFlagURL(item.country, FLAG_SIZE),
-    [item.country]
-  );
+export const CandidateItem = memo(({ item }: ICandidateItemProps) => {
+  const fullName = `${item.firstName} ${item.lastName}`;
+  const countryFlag = generateCountryFlagURL(item.country, FLAG_SIZE);
 
   const renderDetail = (label: string, info: string) => (
     <div className="candidate-details">
@@ -48,4 +42,4 @@ export const CandidateItem = ({ item }: ICandidateItemProps) => {
       </Link>
     </li>
   );
-};
+});

@@ -6,7 +6,7 @@
     "verified": true,
     "location": "Gent",
     "role": "Carer",
-    "image": "https://placekitten.com/640/360",
+    "image": "../images/kitten.png",
     "country": "BE",
     "availability": "within 1 month",
     "nationality": "BE"
@@ -18,7 +18,7 @@
     "verified": true,
     "location": "Kosovo",
     "role": "Carer",
-    "image": "https://placekitten.com/640/360",
+    "image": "../images/kitten.png",
     "country": "AL",
     "availability": "within 1 month",
     "nationality": "AL"
@@ -30,7 +30,7 @@
     "verified": true,
     "location": "Budapest",
     "role": "Carer",
-    "image": "https://placekitten.com/640/360",
+    "image": "../images/kitten.png",
     "country": "HU",
     "availability": "within 1 month",
     "nationality": "HU"
@@ -42,7 +42,7 @@
     "verified": true,
     "location": "Rome",
     "role": "Senior Carer",
-    "image": "https://placekitten.com/640/360",
+    "image": "../images/kitten.png",
     "country": "IT",
     "availability": "within 1 month",
     "nationality": "IT"
@@ -54,7 +54,7 @@
     "verified": true,
     "location": "Pecs",
     "role": "Junior Carer",
-    "image": "https://placekitten.com/640/360",
+    "image": "../images/kitten.png",
     "country": "HU",
     "availability": "within 1 month",
     "nationality": "HU"
@@ -66,7 +66,7 @@
     "verified": true,
     "location": "Paraty",
     "role": "Carer",
-    "image": "https://placekitten.com/640/360",
+    "image": "../images/kitten.png",
     "country": "BR",
     "availability": "within 1 month",
     "nationality": "BR"

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { memo } from "react";
 import { useLoaderData } from "react-router-dom";
 import { Card } from "../../components/UI/Card/Card";
 import { ICandidateItem } from "../../types/candidates";
@@ -7,17 +7,11 @@ import styles from "./CandidateDetails.module.css";
 
 const FLAG_SIZE = 64;
 
-export const CandidateDetails = () => {
+export const CandidateDetails = memo(() => {
   const candidate = useLoaderData() as ICandidateItem;
 
-  const fullName = useMemo(
-    () => `${candidate.firstName} ${candidate.lastName}`,
-    [candidate.firstName, candidate.lastName]
-  );
-  const countryFlag = useMemo(
-    () => generateCountryFlagURL(candidate.country, FLAG_SIZE),
-    [candidate.country]
-  );
+  const fullName = `${candidate.firstName} ${candidate.lastName}`;
+  const countryFlag = generateCountryFlagURL(candidate.country, FLAG_SIZE);
 
   const renderDetail = (label: string, info: string) => (
     <div className="candidate-details">
@@ -66,18 +60,22 @@ export const CandidateDetails = () => {
       </Card>
     </section>
   );
-};
+});
 
 export async function loader({ _, params }: any) {
   // in a perfect world it should be this
   // const response = await fetch(`http://localhost:3000/candidates/${params.id}`);
 
-  const response = await fetch("http://localhost:3000/candidates");
+  try {
+    const response = await fetch("http://localhost:3000/candidates");
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch candidate details");
-  } else {
-    const data = await response.json();
-    return data.find((user: ICandidateItem) => user.id === params.id);
+    if (!response.ok) {
+      throw new Error("Failed to fetch candidate details");
+    } else {
+      const data = await response.json();
+      return data.find((user: ICandidateItem) => user.id === params.id);
+    }
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 }

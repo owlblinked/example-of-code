@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, memo } from "react";
 import styles from "./Searchbar.module.css";
 
 interface ISearchProps {
@@ -6,25 +6,23 @@ interface ISearchProps {
   searchHandler: (searchQuery: string) => void;
 }
 
-export const SearchBar = ({ searchHandler, placeholder }: ISearchProps) => {
-  const [searchValue, setSearchValue] = useState("");
+export const SearchBar = memo(
+  ({ searchHandler, placeholder }: ISearchProps) => {
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+      e.preventDefault();
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    e.preventDefault();
+      searchHandler(e.target.value);
+    };
 
-    setSearchValue(e.target.value);
-    searchHandler(e.target.value.toLowerCase()); // Call the parent component's searchHandler
-  };
-
-  return (
-    <input
-      type="search"
-      value={searchValue}
-      className={styles.searchbar}
-      placeholder={placeholder}
-      onChange={handleChange}
-      aria-label={placeholder}
-      role="search"
-    />
-  );
-};
+    return (
+      <input
+        type="search"
+        className={styles.searchbar}
+        placeholder={placeholder}
+        onChange={handleChange}
+        aria-label={placeholder}
+        role="search"
+      />
+    );
+  }
+);
